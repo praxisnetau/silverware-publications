@@ -1,0 +1,11 @@
+---
+Name: silverware-publications
+---
+
+# Configure Content Controller:
+
+SilverStripe\CMS\Controllers\ContentController:
+  required_js:
+    - "silverware/publications: client/dist/js/bundle.js"
+  required_css:
+    - "silverware/publications: client/dist/styles/bundle.css"

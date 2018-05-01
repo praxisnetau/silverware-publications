@@ -1,0 +1,27 @@
+/* SilverWare Publications Styles
+===================================================================================================================== */
+
+.publicationarchive {
+  
+  .categories {
+    
+    .category {
+      margin-bottom: $spacer;
+    }
+    
+  }
+  
+}
+
+article.publication,
+div.publication article {
+  
+  div.files {
+    
+    span.info {
+      color: $gray-600;
+    }
+    
+  }
+  
+}
