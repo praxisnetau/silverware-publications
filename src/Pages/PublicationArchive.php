@@ -253,6 +253,18 @@ class PublicationArchive extends Page implements ListSource
     }
     
     /**
+     * Answers all non-empty categories within the receiver.
+     *
+     * @return ArrayList
+     */
+    public function getNonEmptyCategories()
+    {
+        return $this->getAllCategories()->filterByCallback(function ($category) {
+            return $category->hasPublications();
+        });
+    }
+    
+    /**
      * Answers all visible categories within the receiver.
      *
      * @return ArrayList
@@ -261,7 +273,7 @@ class PublicationArchive extends Page implements ListSource
     {
         $data = ArrayList::create();
         
-        foreach ($this->getAllCategories()->filter('ShowOnSeparatePage', 0) as $category) {
+        foreach ($this->getNonEmptyCategories()->filter('ShowOnSeparatePage', 0) as $category) {
             
             $data->push(
                 ArrayData::create([
