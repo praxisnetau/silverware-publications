@@ -229,7 +229,7 @@ class PublicationArchive extends Page implements ListSource
      */
     public function getPublications()
     {
-        return $this->sort(Publication::get()->filter('ParentID', $this->AllChildren()->column('ID') ?: null));
+        return $this->getSortedPublications(Publication::get()->filter('ParentID', $this->AllChildren()->column('ID') ?: null));
     }
     
     /**
@@ -337,7 +337,7 @@ class PublicationArchive extends Page implements ListSource
      *
      * @return SS_List
      */
-    public function sort(SS_List $list)
+    public function getSortedPublications(SS_List $list)
     {
         switch ($this->SortOrder) {
             case self::SORT_DATE_ASC:

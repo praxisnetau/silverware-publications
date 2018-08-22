@@ -219,7 +219,7 @@ class PublicationCategory extends Page implements ListSource
      */
     public function getPublications()
     {
-        return $this->getArchive()->sort(Publication::get()->filter('ParentID', $this->ID));
+        return $this->getArchive()->getSortedPublications(Publication::get()->filter('ParentID', $this->ID));
     }
     
     /**
