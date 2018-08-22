@@ -127,7 +127,8 @@ class PublicationArchive extends Page implements ListSource
      * @config
      */
     private static $allowed_children = [
-        PublicationCategory::class
+        PublicationCategory::class,
+        Publication::class
     ];
     
     /**
@@ -229,7 +230,23 @@ class PublicationArchive extends Page implements ListSource
      */
     public function getPublications()
     {
-        return $this->getSortedPublications(Publication::get()->filter('ParentID', $this->AllChildren()->column('ID') ?: null));
+        $publications = ArrayList::create();
+        
+        $publications->merge(Publication::get()->filter('ParentID', $this->AllChildren()->column('ID') ?: null));
+        
+        $publications->merge($this->getChildMembers());
+        
+        return $this->getSortedPublications($publications);
+    }
+    
+    /**
+     * Answers a list of the immediate child publications of the archive.
+     *
+     * @return DataList
+     */
+    public function getChildPublications()
+    {
+        return $this->getSortedPublications($this->AllChildren()->filter('ClassName', Publication::class));
     }
     
     /**
@@ -286,6 +303,21 @@ class PublicationArchive extends Page implements ListSource
         }
         
         return $data;
+    }
+    
+    /**
+     * Answers the child publication list component for the template.
+     *
+     * @return BaseListComponent
+     */
+    public function getChildPublicationList()
+    {
+        $list = clone $this->getListComponent();
+        
+        $list->setSource($this->getChildPublications());
+        $list->setStyleIDFrom($this);
+        
+        return $list;
     }
     
     /**
